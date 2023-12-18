@@ -87,10 +87,10 @@ RUN echo "deb http://ppa.launchpad.net/iconnor/zoneminder-1.36/ubuntu `cat /etc/
     && rm -rf /var/lib/apt/lists/*
 
 #install zmeventserver
-ENV ZMEVENT_VERSION v6.1.27
+ENV ZMEVENT_VERSION v6.1.29
 RUN mkdir /usr/src/zmevent \
     && cd /usr/src/zmevent \
-    && wget -qO- https://github.com/pliablepixels/zmeventnotification/archive/${ZMEVENT_VERSION}.tar.gz |tar -xzv --strip 1 \
+    && wget -qO- https://github.com/ZoneMinder/zmeventnotification/archive/refs/tags/${ZMEVENT_VERSION}.tar.gz | tar -xzv --strip 1 \
     && ./install.sh --install-config --install-es --install-hook --no-interactive --no-pysudo \
     && rm -R /usr/src/zmevent
 
