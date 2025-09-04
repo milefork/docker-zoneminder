@@ -16,10 +16,10 @@ else
  chown www-data:www-data /var/run/zm
 
  # set the memory limit of php
- sed  -i "s|memory_limit = .*|memory_limit = ${PHP_MEMORY_LIMIT:-512M}|" /etc/php/7.4/apache2/php.ini
+ sed  -i "s|memory_limit = .*|memory_limit = ${PHP_MEMORY_LIMIT:-512M}|" /etc/php/8.1/apache2/php.ini
 
  #to fix problem with data.timezone that appear at 1.28.108 for some reason
- sed  -i "s|\;date.timezone =|date.timezone = \"${TZ:-Europe/Berlin}\"|" /etc/php/7.4/apache2/php.ini
+ sed  -i "s|\;date.timezone =|date.timezone = \"${TZ:-Europe/Berlin}\"|" /etc/php/8.1/apache2/php.ini
  echo ${TZ:-Europe/Berlin} > /etc/timezone
 
  # copy from backup of /etc/zm if config files missing .. 
