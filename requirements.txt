@@ -1,4 +1,4 @@
-opencv-contrib-python
+opencv-contrib-python==4.10.0.84
 imutils
 pyzm>=0.3.36
 numpy
