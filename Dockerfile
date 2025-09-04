@@ -1,5 +1,5 @@
 # build missing perl dependencies for use in final container
-FROM ubuntu:20.04 as perlbuild
+FROM ubuntu:22.04 as perlbuild
 
 ENV TZ Europe/Berlin
 WORKDIR /usr/src
@@ -19,7 +19,7 @@ RUN apt-file update \
     && dh-make-perl --build --cpan Net::MQTT::Simple
 
 # Now build the final image
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 LABEL maintainer="Angel Rodriguez <angel@quantumobject.com>"
 
 ENV TZ Europe/Berlin
@@ -71,7 +71,7 @@ RUN pip3 install --no-cache-dir -r /usr/src/requirements.txt
 RUN echo "deb http://ppa.launchpad.net/iconnor/zoneminder-1.36/ubuntu `cat /etc/os-release | grep UBUNTU_CODENAME | cut -d = -f 2` main" >> /etc/apt/sources.list  \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 776FFB04 \
     && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends php-gd libapache2-mod-php7.4 zoneminder \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends php-gd libapache2-mod-php zoneminder \
     && echo "ServerName localhost" | tee /etc/apache2/conf-available/fqdn.conf \
     && ln -s /etc/apache2/conf-available/fqdn.conf /etc/apache2/conf-enabled/fqdn.conf \
     && a2enmod cgi rewrite \
