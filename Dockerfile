@@ -1,7 +1,7 @@
 # build missing perl dependencies for use in final container
-FROM ubuntu:22.04 as perlbuild
+FROM ubuntu:22.04 AS perlbuild
 
-ENV TZ Europe/Berlin
+ENV TZ=Europe/Berlin
 WORKDIR /usr/src
 RUN echo $TZ > /etc/timezone && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends \
         perl \
@@ -22,12 +22,12 @@ RUN apt-file update \
 FROM ubuntu:22.04
 LABEL maintainer="Angel Rodriguez <angel@quantumobject.com>"
 
-ENV TZ Europe/Berlin
-ENV ZM_DB_HOST db
-ENV ZM_DB_NAME zm 
-ENV ZM_DB_USER zmuser
-ENV ZM_DB_PASS zmpass
-ENV ZM_DB_PORT 3306
+ENV TZ=Europe/Berlin
+ENV ZM_DB_HOST=db
+ENV ZM_DB_NAME=zm 
+ENV ZM_DB_USER=zmuser
+ENV ZM_DB_PASS=zmpass
+ENV ZM_DB_PORT=3306
 
 COPY --from=perlbuild /usr/src/*.deb /usr/src/
 
@@ -87,7 +87,7 @@ RUN echo "deb http://ppa.launchpad.net/iconnor/zoneminder-1.36/ubuntu `cat /etc/
     && rm -rf /var/lib/apt/lists/*
 
 #install zmeventserver
-ENV ZMEVENT_VERSION v6.1.29
+ENV ZMEVENT_VERSION=v6.1.29
 RUN mkdir /usr/src/zmevent \
     && cd /usr/src/zmevent \
     && wget -qO- https://github.com/ZoneMinder/zmeventnotification/archive/refs/tags/${ZMEVENT_VERSION}.tar.gz | tar -xzv --strip 1 \
