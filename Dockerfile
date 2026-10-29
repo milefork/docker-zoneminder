@@ -33,7 +33,8 @@ COPY --from=perlbuild /usr/src/*.deb /usr/src/
 
 # Update the container
 # Installation of nesesary package/software for this containers...
-RUN echo $TZ > /etc/timezone && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends \
+RUN echo $TZ > /etc/timezone && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y -q \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends \
         libvlc-dev  \
         libvlccore-dev\
         apache2 \
